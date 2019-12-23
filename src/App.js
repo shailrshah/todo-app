@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Toggle } from "react-toggle-component";
 import "./App.css";
-import initTodoList from "./initTodoList";
+import todos from "./todos";
 
 // Individual Todo functional component
 const Todo = ({ todo, index, toggleTodoInTodoList, deleteTodoFromTodoList }) => {
@@ -28,7 +28,7 @@ const Todo = ({ todo, index, toggleTodoInTodoList, deleteTodoFromTodoList }) => 
   );
 };
 
-// Todo Input allows users to enter a new Todo
+// Input functional component allows users to enter a new Todo
 const TodoInput = ({ addTodoToTodoList }) => {
   const [userText, setUserText] = useState("");
 
@@ -52,9 +52,9 @@ const TodoInput = ({ addTodoToTodoList }) => {
   );
 };
 
-// Main component that allows CRUD operations for Todos
-const TodoList = () => {
-  const [todoList, setTodoList] = useState(initTodoList);
+// Main functional component that allows CRUD operations for Todos
+const TodoList = ({ todos }) => {
+  const [todoList, setTodoList] = useState(todos);
 
   // Create
   const addTodoToTodoList = userText =>
@@ -100,7 +100,7 @@ const TodoList = () => {
 
 const App = () => (
   <div className="app">
-    <TodoList />
+    <TodoList todos={todos}/>
   </div>
 );
 

@@ -1,3 +1,6 @@
+# Todo App With Functional Components
+![Demo of Todo App](./public/demo.gif)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
