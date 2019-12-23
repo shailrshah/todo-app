@@ -2,8 +2,10 @@ import React, { useState } from "react";
 
 import { Toggle } from "react-toggle-component";
 import "./App.css";
+import initTodoList from "./initTodoList";
 
-const Todo = ({ todo, index, toggleTodo, deleteTodo }) => {
+// Individual Todo functional component
+const Todo = ({ todo, index, toggleTodoInTodoList, deleteTodoFromTodoList }) => {
   return (
     <div className="todo">
       <span style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}>
@@ -16,9 +18,9 @@ const Todo = ({ todo, index, toggleTodo, deleteTodo }) => {
           borderColor="black"
           knobColor="white"
           name={"toggle" + index}
-          onToggle={e => toggleTodo(index)}
+          onToggle={e => toggleTodoInTodoList(index)}
         />
-        <button onClick={e => deleteTodo(index)} className="delete-button">
+        <button onClick={e => deleteTodoFromTodoList(index)} className="delete-button">
           Delete
         </button>
       </div>
@@ -26,13 +28,14 @@ const Todo = ({ todo, index, toggleTodo, deleteTodo }) => {
   );
 };
 
-const TodoInput = ({ addTodo }) => {
+// Todo Input allows users to enter a new Todo
+const TodoInput = ({ addTodoToTodoList }) => {
   const [userText, setUserText] = useState("");
 
   const handleSubmit = event => {
     event.preventDefault();
     if (!userText) return;
-    addTodo(userText);
+    addTodoToTodoList(userText);
     setUserText("");
   };
 
@@ -49,47 +52,56 @@ const TodoInput = ({ addTodo }) => {
   );
 };
 
-const App = () => {
-  const [todoList, setTodoList] = useState([
-    { text: "Research climate change", isCompleted: false },
-    { text: "Pick up prescriptions", isCompleted: false },
-    { text: "Complete math homework", isCompleted: false }
-  ]);
+// Main component that allows CRUD operations for Todos
+const TodoList = () => {
+  const [todoList, setTodoList] = useState(initTodoList);
 
-  const addTodo = userText => {
-    const todo = { text: userText, isCompleted: false };
-    setTodoList([...todoList, todo]);
-  };
+  // Create
+  const addTodoToTodoList = userText =>
+    setTodoList([
+      ...todoList,
+      {
+        text: userText,
+        isCompleted: false
+      }
+    ]);
 
-  const toggleTodo = index => {
+  // Read
+  const renderTodoList = () => (
+    <div className="todo-list">
+      <h1 className="heading">Todo List</h1>
+      {todoList.map((todo, index) => (
+        <Todo
+          todo={todo}
+          index={index}
+          key={index}
+          toggleTodoInTodoList={toggleTodoInTodoList}
+          deleteTodoFromTodoList={deleteTodoFromTodoList}
+        />
+      ))}
+      <TodoInput addTodoToTodoList={addTodoToTodoList} />
+    </div>
+  );
+
+  // Update
+  const toggleTodoInTodoList = index => {
     const newTodoList = [...todoList];
     newTodoList[index].isCompleted = !newTodoList[index].isCompleted;
     setTodoList(newTodoList);
   };
 
-  const deleteTodo = index => {
-    const newTodoList = [...todoList];
-    newTodoList.splice(index, 1);
-    setTodoList(newTodoList);
-  };
+  //Delete
+  const deleteTodoFromTodoList = index =>
+    setTodoList(todoList.slice(0, index).concat(todoList.slice(index + 1)));
 
-  return (
-    <div className="app">
-      <div className="todo-list">
-        <h1 className="heading">Todo List</h1>
-        {todoList.map((todo, index) => (
-          <Todo
-            todo={todo}
-            index={index}
-            key={index}
-            toggleTodo={toggleTodo}
-            deleteTodo={deleteTodo}
-          />
-        ))}
-        <TodoInput addTodo={addTodo} />
-      </div>
-    </div>
-  );
+  // <TodoList /> will invoke renderTodoList()
+  return renderTodoList();
 };
+
+const App = () => (
+  <div className="app">
+    <TodoList />
+  </div>
+);
 
 export default App;
