@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import App from 'App';
-import todos from "Todo/todos.json";
+import {todos} from 'Todo/todos';
 
 describe('App', () => {
   it('renders correctly', () => {

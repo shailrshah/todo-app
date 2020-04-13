@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./styles.css";
 
 interface TodoInputProps {
   addTodo: (userText: string) => void

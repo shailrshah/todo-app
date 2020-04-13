@@ -1,7 +1,7 @@
 import React from "react";
 import { Toggle } from "react-toggle-component";
-import { Todo } from "./TodoInterface";
-import "./styles.css";
+import { Todo } from "Todo/TodoInterface";
+
 
 interface TodoIslandProps {
   todo: Todo;

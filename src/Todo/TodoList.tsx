@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Todo } from "./TodoInterface";
-import { TodoIsland } from "./TodoIsland";
-import { TodoInput } from "./TodoInput";
-import "./styles.css";
+import { Todo } from "Todo/TodoInterface";
+import { TodoIsland } from "Todo/TodoIsland";
+import { TodoInput } from "Todo/TodoInput";
+import "Todo/styles.css";
 
 interface TodoListProps {
   todos: Todo[];
